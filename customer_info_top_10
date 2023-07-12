@@ -1,0 +1,17 @@
+# Top customers from the 10 most populated cities
+
+SELECT  B.customer_id,
+		B.first_name,
+		B.last_name,
+		E.country,
+		D.city,
+	             SUM(amount) AS total_amount_spent
+FROM payment A
+INNER JOIN customer B on A.customer_id = B.customer_id
+INNER JOIN address C on B.address_id = C.address_id
+INNER JOIN city D on C.city_id = D.city_id
+INNER JOIN country E on D.country_id = E.country_id
+WHERE city IN ('Aurora', 'Acua', 'Citrus Heights', 'Iwaki', 'Ambattur','Shanwei','So Leopoldo','Teboksary','Tianjin','Cainjur')
+GROUP BY B.customer_id, E.country, D.city
+ORDER BY SUM (amount) DESC
+LIMIT 10
