@@ -1,0 +1,32 @@
+# Number of top customers in most populated countries
+
+WITH top_countries (country, all_customer_count, top_customer_count) AS 
+(SELECT  D.country,
+	  COUNT(A.customer_id) AS all_customer_count,
+	  COUNT (top_five_customers) AS top_customer_count
+FROM customer A
+INNER JOIN address B on A.address_id = B.address_id
+INNER JOIN city C on B.city_id = C.city_id
+INNER JOIN country D on C.country_id = D.country_id
+LEFT JOIN 
+(SELECT  B.customer_id,
+		B.first_name,
+		B.last_name,
+		E.country,
+		D.city,
+	             SUM(amount) AS total_amount_paid
+FROM payment A
+INNER JOIN customer B on A.customer_id = B.customer_id
+INNER JOIN address C on B.address_id = C.address_id
+INNER JOIN city D on C.city_id = D.city_id
+INNER JOIN country E on D.country_id = E.country_id
+WHERE city IN ('Aurora', 'Acua', 'Citrus Heights', 'Iwaki', 'Ambattur','Shanwei','So Leopoldo','Teboksary','Tianjin','Cainjur')
+GROUP BY B.customer_id, E.country, D.city
+ORDER BY SUM (amount) DESC
+LIMIT 5) AS top_five_customers 
+on A.customer_id = top_five_customers.customer_id
+GROUP BY D.country
+HAVING COUNT(top_five_customers) > 0
+ORDER BY all_customer_count DESC)
+SELECT country, all_customer_count, top_customer_count
+FROM top_countries
