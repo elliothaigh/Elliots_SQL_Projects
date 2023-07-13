@@ -30,11 +30,10 @@ Rockbuster - http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdren
 - actor
 - film
 - category
-
-## Tableau Visuals
-https://public.tableau.com/app/profile/elliot.haigh7226/viz/SalesbyContinent/RockbusterVizs?publish=yes
-
 - address
 - language
 - city
 - country
+
+## Tableau Visuals
+https://public.tableau.com/app/profile/elliot.haigh7226/viz/SalesbyContinent/RockbusterVizs?publish=yes
